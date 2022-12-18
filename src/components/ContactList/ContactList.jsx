@@ -1,19 +1,20 @@
 import { useSelector } from 'react-redux';
 
-import { getContacts, getFilter } from 'redux/selectors';
+import { getFilter } from 'redux/selectors';
+import { useGetContactsQuery } from 'services/phonebookBackendAPI';
 
 import { ContactsList } from './ContactList.styled';
 import { ContactListItem } from './ContactListItem/ContactListItem';
 
 export function ContactList() {
+  const { data: contactsData, error, isLoading } = useGetContactsQuery();
   const filterValue = useSelector(getFilter);
-  const contactsData = useSelector(getContacts);
 
   //filter contacts by filter value on changes
   const filteredContacts = (() => {
     const normalizedFilter = filterValue.toLowerCase().trim();
 
-    if (!normalizedFilter) {
+    if (!normalizedFilter || !contactsData) {
       return null;
     }
 
@@ -24,9 +25,12 @@ export function ContactList() {
 
   return (
     <ContactsList>
-      {(filteredContacts ?? contactsData).map(contactData => (
-        <ContactListItem key={contactData.id} contactData={contactData} />
-      ))}
+      {isLoading && <p>Contacts are loading... Please wait. </p>}
+      {error && <p>Network error. Contacts cant be loaded. </p>}
+      {contactsData &&
+        (filteredContacts ?? contactsData).map(contactData => (
+          <ContactListItem key={contactData.id} contactData={contactData} />
+        ))}
     </ContactsList>
   );
 }
