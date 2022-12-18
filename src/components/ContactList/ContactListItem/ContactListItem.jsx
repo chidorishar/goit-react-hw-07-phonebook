@@ -8,7 +8,8 @@ import { Box } from 'components/common/Box/Box.styled';
 import { ContactInfo, DeleteButton } from './ContactListItem.styled';
 
 export function ContactListItem({ contactData: { name, number, id } }) {
-  const [deleteContactByID, { isLoading }] = useDeleteContactMutation();
+  const [deleteContactByID, { isLoading, isSuccess }] =
+    useDeleteContactMutation();
 
   return (
     <Box
@@ -30,7 +31,7 @@ export function ContactListItem({ contactData: { name, number, id } }) {
         {name}: {number}
       </ContactInfo>
       <DeleteButton
-        disabled={isLoading}
+        disabled={isLoading || isSuccess}
         onClick={() => deleteContactByID(id)}
         isDelete={true}
       >
