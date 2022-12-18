@@ -35,7 +35,7 @@ export function ContactListItem({ contactData: { name, number, id } }) {
         onClick={() => deleteContactByID(id)}
         isDelete={true}
       >
-        {isLoading ? 'Deleting' : 'Delete'}
+        {isLoading || isSuccess ? 'Deleting' : 'Delete'}
       </DeleteButton>
     </Box>
   );
