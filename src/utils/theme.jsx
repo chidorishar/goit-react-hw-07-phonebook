@@ -26,6 +26,9 @@ export const theme = {
     round: '50%',
   },
   sizes: {
+    buttons: {
+      normal: '100px',
+    },
     small: '200px',
     normal: '300px',
     wide: '500px',

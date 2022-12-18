@@ -21,6 +21,7 @@ export const DeleteButton = styled.button`
   font-size: ${p => p.theme.fontSizes[2]}px;
   font-weight: ${p => p.theme.fontWeights.bold};
 
+  min-width: ${p => p.theme.sizes.buttons.normal};
   padding: ${p => p.theme.space[1]}px ${p => p.theme.space[3]}px;
   border-radius: ${p => p.theme.radii.normal};
 
