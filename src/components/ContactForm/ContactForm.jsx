@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Notify } from 'notiflix';
 import { nanoid } from 'nanoid';
 
-import { store } from 'redux/store.js';
-import { addContact } from 'redux/contactsSlice';
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from 'services/phonebookBackendAPI';
 
 import {
   AddContactButton,
@@ -25,13 +26,10 @@ export function ContactForm() {
     [INPUTS_NAMES.name]: setName,
     [INPUTS_NAMES.number]: setNumber,
   };
-  const dispatch = useDispatch();
+  const { data: contactsData } = useGetContactsQuery();
+  const [addContact, { isLoading }] = useAddContactMutation();
 
   function isContactWithNameExist(searchName) {
-    const {
-      contacts: { contacts: contactsData },
-    } = store.getState();
-
     if (!contactsData) return;
 
     const searchNameNormalized = searchName.trim().toLowerCase();
@@ -49,7 +47,7 @@ export function ContactForm() {
       return;
     }
 
-    dispatch(addContact({ name, number, id: nanoid() }));
+    addContact({ name, number, id: nanoid() });
     setName('');
     setNumber('');
   };
@@ -87,8 +85,8 @@ export function ContactForm() {
           value={number}
         ></ContactInput>
       </InputInfoLabel>
-      <AddContactButton type="submit" cursor="cross">
-        Add contact
+      <AddContactButton type="submit" cursor="cross" disabled={isLoading}>
+        {isLoading ? 'Saving...' : 'Add contact'}
       </AddContactButton>
     </AddContactForm>
   );
