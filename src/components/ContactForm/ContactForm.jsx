@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import {
   useAddContactMutation,
   useGetContactsQuery,
-} from 'services/phonebookBackendAPI';
+} from 'redux/contactsApiSlice';
 
 import {
   AddContactButton,

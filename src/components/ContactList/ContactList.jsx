@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
+import { useGetContactsQuery } from 'redux/contactsApiSlice';
 import { getFilter } from 'redux/selectors';
-import { useGetContactsQuery } from 'services/phonebookBackendAPI';
 
 import { ContactsList } from './ContactList.styled';
 import { ContactListItem } from './ContactListItem/ContactListItem';
